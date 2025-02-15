@@ -1,14 +1,16 @@
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ContainsDuplicate_217 {
+
     public static void main(String[] args) {
         var nums = new int[]{6, 9, 7, 6, 5};
         // Bruteforce technique: looping through all the value:  On^2
         // Sorting the array and check immediate value :  Olog(n)
         // Hashset technique
-        System.out.println(containsDuplicateBySorting(nums));
+        System.out.println(containsDuplicateStream(nums));
     }
 
     // Time Complexity: O(n)
@@ -40,5 +42,25 @@ public class ContainsDuplicate_217 {
             }
         }
         return false;
+    }
+
+    // Time Complexity: O(n²)
+    // Space Complexity: O(1)
+    public static boolean ContainsDuplicateBruteForce(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[i] == nums[j]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
+    public static boolean containsDuplicateStream(int[] nums) {
+        Set<Integer> set = Arrays.stream(nums).boxed().collect(Collectors.toSet());
+        return set.size() != nums.length;
     }
 }
